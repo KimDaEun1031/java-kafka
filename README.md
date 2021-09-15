@@ -154,6 +154,24 @@ File -> Settings -> Search(Multirun) -> install
 kafka의 topic으로 데이터를 보낸다.
 + Kafka Producer API : https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
 + Kafka Producer Configs : https://relaxed-it-study.tistory.com/59
+
+#### API 문서 안 예제
+```
+ Properties props = new Properties();
+ props.put("bootstrap.servers", "localhost:9092");
+ props.put("acks", "all");
+ props.put("retries", 0);
+ props.put("linger.ms", 1);
+ props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+ props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+ Producer<String, String> producer = new KafkaProducer<>(props);
+ for (int i = 0; i < 100; i++)
+     producer.send(new ProducerRecord<String, String>("my-topic", Integer.toString(i), Integer.toString(i)));
+
+ producer.close();
+```
+
 #### Sender.java
 ```
 public class Sender {
@@ -216,6 +234,25 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 kafka의 topic에서 데이터를 가져와 출력한다.
 + Kafka Consumer API : https://kafka.apache.org/28/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html
 + Kafka Consumer Configs : https://relaxed-it-study.tistory.com/59
+
+#### API 문서 안 예제
+```
+Properties props = new Properties();
+     props.setProperty("bootstrap.servers", "localhost:9092");
+     props.setProperty("group.id", "test");
+     props.setProperty("enable.auto.commit", "true");
+     props.setProperty("auto.commit.interval.ms", "1000");
+     props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+     props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+     KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+     consumer.subscribe(Arrays.asList("foo", "bar"));
+     while (true) {
+         ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+         for (ConsumerRecord<String, String> record : records)
+             System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+     }
+```
+
 #### Receiver.java
 ```
 public class Receiver {
