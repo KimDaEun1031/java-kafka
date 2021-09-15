@@ -8,27 +8,28 @@ import java.util.Scanner;
 
 public class ReceiverApplication {
 
-	public static void main(String[] args) throws IOException {
-		System.out.println("kafka receiver start");
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        System.out.println("kafka receiver start");
 
-		args = new String[2];
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.print("group : ");
-		args[0] = bufferedReader.readLine();
+        args = new String[2];
 
-		System.out.print("topic : ");
-		args[1] = bufferedReader.readLine();
-		bufferedReader.close();
+        System.out.print("group : ");
+        args[0] = bufferedReader.readLine();
 
-		Receiver receiver = new Receiver(args[1], args[0]);
-//		receiver.receiverProps(args[0]);
+        System.out.print("topic : ");
+        args[1] = bufferedReader.readLine();
 
-		System.out.println("polling...");
-		while (true) {
-			receiver.poll();
-		}
+        bufferedReader.close();
+
+        Receiver receiver = new Receiver(args[1], args[0]);
+
+        System.out.println("polling...");
+        while (true) {
+            receiver.poll();
+        }
 
 //		receiver.close();
-	}
+    }
 }

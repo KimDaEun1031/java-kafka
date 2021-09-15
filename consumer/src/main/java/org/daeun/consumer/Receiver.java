@@ -19,8 +19,6 @@ import java.util.Map;
 @Slf4j
 public class Receiver {
 
-//    private static final String TOPIC = "test";
-//    private static final String GROUP = "foo";
     private KafkaConsumer<String, String> consumer;
 
     public Receiver(String topic, String group) {
@@ -46,8 +44,6 @@ public class Receiver {
                     record.key(),
                     record.value());
     }
-
-
 
     public Map<String, Object> receiverProps(String group) {
         Map<String, Object> props = new HashMap<>();

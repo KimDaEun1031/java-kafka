@@ -17,19 +17,18 @@ import java.util.Map;
 
 @Slf4j
 public class Sender {
-    public final String TOPIC = "test";
     private Producer<String, String> producer;
 
     public Sender() {
-        this.producer = new KafkaProducer<String, String>(senderProps());
+        this.producer = new KafkaProducer<>(senderProps());
     }
 
     public void close() {
         producer.close();
     }
 
-    public void sendMessage(String key, String value) {
-        producer.send(new ProducerRecord<>(TOPIC, key, value));
+    public void sendMessage(String topic, String key, String value) {
+        producer.send(new ProducerRecord<>(topic, key, value));
         System.out.printf("%s, Produce message : %s%n", LocalDateTime.now(), value);
 
     }
