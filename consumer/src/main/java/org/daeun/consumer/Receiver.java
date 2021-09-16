@@ -9,7 +9,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class Receiver {
     public Receiver(String group, String topic) {
         this.consumer = new KafkaConsumer<>(receiverProps(group));
         //Topic 구독
-        consumer.subscribe(Arrays.asList(topic));
+        consumer.subscribe(Collections.singletonList(topic));
     }
 
     public void close() {
