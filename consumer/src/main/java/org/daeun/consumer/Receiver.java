@@ -5,15 +5,12 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -21,7 +18,7 @@ public class Receiver {
 
     private KafkaConsumer<String, String> consumer;
 
-    public Receiver(String topic, String group) {
+    public Receiver(String group, String topic) {
         this.consumer = new KafkaConsumer<>(receiverProps(group));
         //Topic 구독
         consumer.subscribe(Arrays.asList(topic));

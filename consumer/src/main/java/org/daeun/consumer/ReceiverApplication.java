@@ -3,8 +3,6 @@ package org.daeun.consumer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class ReceiverApplication {
 
@@ -13,23 +11,25 @@ public class ReceiverApplication {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        args = new String[2];
-
         System.out.print("group : ");
-        args[0] = bufferedReader.readLine();
+        String group = bufferedReader.readLine();
 
         System.out.print("topic : ");
-        args[1] = bufferedReader.readLine();
+        String topic = bufferedReader.readLine();
 
         bufferedReader.close();
 
-        Receiver receiver = new Receiver(args[1], args[0]);
+        receive(group, topic);
+    }
+
+    private static void receive(String group, String topic) {
+        Receiver receiver = new Receiver(group, topic);
 
         System.out.println("polling...");
         while (true) {
             receiver.poll();
         }
 
-//		receiver.close();
+        //		receiver.close();
     }
 }

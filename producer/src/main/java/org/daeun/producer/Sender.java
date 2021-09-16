@@ -5,11 +5,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -30,7 +26,6 @@ public class Sender {
     public void sendMessage(String topic, String key, String value) {
         producer.send(new ProducerRecord<>(topic, key, value));
         System.out.printf("%s, Produce message : %s%n", LocalDateTime.now(), value);
-
     }
 
     private Map<String, Object> senderProps() {
