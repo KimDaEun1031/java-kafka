@@ -17,13 +17,16 @@ public class ReceiverApplication {
         System.out.print("topic : ");
         String topic = bufferedReader.readLine();
 
+        System.out.print("name : ");
+        String name = bufferedReader.readLine();
+
         bufferedReader.close();
 
-        receive(group, topic);
+        receive(name, group, topic);
     }
 
-    private static void receive(String group, String topic) {
-        Receiver receiver = new Receiver(group, topic);
+    private static void receive(String name, String group, String topic) {
+        Receiver receiver = new Receiver(name, group, topic);
 
         System.out.println("polling...");
         while (true) {

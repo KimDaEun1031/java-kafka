@@ -20,7 +20,7 @@ public class SenderApplication {
     private static void send(String topic) throws InterruptedException {
         Sender sender = new Sender();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             sender.sendMessage(topic, "test" + i, LocalDateTime.now().toString());
             TimeUnit.MILLISECONDS.sleep(1000);
         }

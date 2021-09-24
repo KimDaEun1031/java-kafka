@@ -17,11 +17,17 @@ import java.util.Map;
 public class Receiver {
 
     private KafkaConsumer<String, String> consumer;
+    private String name;
 
-    public Receiver(String group, String topic) {
+    public Receiver(String name, String group, String topic) {
+        this.name = name;
         this.consumer = new KafkaConsumer<>(receiverProps(group));
         //Topic 구독
-        consumer.subscribe(Collections.singletonList(topic));
+        consumer.subscribe(Collections.singletonList(topic), new WatchOffsetOnRebalance(name));
+    }
+
+    public Receiver(String group, String topic) {
+        this("default_" + Thread.currentThread().getId(), group, topic);
     }
 
     public void close() {
@@ -33,13 +39,15 @@ public class Receiver {
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
         //메시지 출력
         for (ConsumerRecord<String, String> record : records)
-            System.out.printf("%s, groupId = %s, offset = %d, partitionNumber = %d, key = %s, value = %s%n",
+            System.out.printf("%s, groupId = %s,  name = %s, offset = %d, partition = %d, key = %s, value = %s%n",
                     LocalDateTime.now(),
                     consumer.groupMetadata().groupId(),
+                    name,
                     record.offset(),
                     record.partition(),
                     record.key(),
                     record.value());
+        consumer.commitSync();
     }
 
     public Map<String, Object> receiverProps(String group) {
@@ -50,6 +58,8 @@ public class Receiver {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, name);
+//        System.out.println(name + props);
         return props;
     }
 }
