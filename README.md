@@ -172,7 +172,7 @@ kafka의 topic으로 데이터를 보낸다.
  producer.close();
 ```
 
-#### Sender.java
+#### Sender.java 수정
 ```
 public class Sender {
     private static final String TOPIC = "test";
@@ -204,7 +204,7 @@ public class Sender {
 }
 ```
 
-#### SenderApplication.java
+#### SenderApplication.java 수정
 ```
 public class SenderApplication {
 
@@ -220,7 +220,7 @@ public class SenderApplication {
 }
 ```
 
-#### 실행
+#### 실행 (수정 전과 같음)
 ```
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
@@ -253,7 +253,7 @@ Properties props = new Properties();
      }
 ```
 
-#### Receiver.java
+#### Receiver.java 수정
 ```
 public class Receiver {
 
@@ -288,7 +288,7 @@ public class Receiver {
 }
 ```
 
-#### ReceiverApplication.java
+#### ReceiverApplication.java 수정
 ```
 public class ReceiverApplication {
 
@@ -307,7 +307,7 @@ public class ReceiverApplication {
 }
 ```
 
-#### 실행
+#### 실행 
 ```
 kafka receiver start
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
